@@ -11,16 +11,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "notes")
+@Table(name = "Users")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
         allowGetters = true)
 public class User implements Serializable {
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
-    private Date updatedAt;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int CustomerID;          //PK int
