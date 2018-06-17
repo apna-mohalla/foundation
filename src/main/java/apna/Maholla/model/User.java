@@ -39,17 +39,22 @@ public class User implements Serializable {
     @NotBlank
     private String FlatNumber;       //string
 
-    @NotBlank
-    private int RoleId;               //int FK >- Roles.RoleId
+    @ManyToOne
+    private Roles RoleId;               //int FK >- Roles.RoleId
 
-    @NotBlank
-    private int AppartmentId;         //int FK >- Appartment.AppartmentId
+    @ManyToOne
+    private Apartment ApartmentId;         //int FK >- Apartment.AppartmentId
 
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date updatedAt;
 
 }
 
