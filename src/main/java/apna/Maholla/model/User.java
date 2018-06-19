@@ -19,7 +19,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int CustomerID;          //PK int
+    private int ID;          //PK int
 
     @NotBlank
     private String UserID;           //UNIQUE
@@ -40,7 +40,7 @@ public class User implements Serializable {
     private String FlatNumber;       //string
 
     @ManyToOne
-    private Roles RoleId;               //int FK >- Roles.RoleId
+    private Roles Role;               //int FK >- Roles.RoleId
 
     @ManyToOne
     private Apartment Apartment;         //int FK >- Apartment.AppartmentId

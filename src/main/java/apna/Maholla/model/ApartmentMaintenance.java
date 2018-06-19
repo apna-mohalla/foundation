@@ -11,7 +11,7 @@ public class ApartmentMaintenance {
     private int Id;
 
     @ManyToOne
-    private Apartment ApartmentId;
+    private Apartment Apartment;
 
     @ManyToOne
     private Month monthId;

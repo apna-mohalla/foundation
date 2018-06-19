@@ -15,5 +15,5 @@ public class State {
     private String stateName;
 
     @ManyToOne
-    private Country counrtyId;
+    private Country country;
 }

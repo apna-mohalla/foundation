@@ -9,7 +9,7 @@ public class Month {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int MonthId;
+    private int Id;
 
     @NotBlank
     private String Month;

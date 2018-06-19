@@ -1,6 +1,7 @@
 package apna.Maholla.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -16,10 +17,13 @@ import java.util.Date;
 public class ElectricBill {
 
     @Id
-    private int ElectricBillId;
+    private int Id;
+
+    @UniqueElements
+    private int CustomerNumber;
 
     @ManyToOne
-    private Apartment AppartmentId;
+    private Apartment Apartment;
 
     @NotBlank
     private String roomNo;

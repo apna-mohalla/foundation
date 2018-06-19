@@ -12,8 +12,8 @@ public class City {
     private int id;
 
     @NotBlank
-    private String stateName;
+    private String cityName;
 
     @ManyToOne
-    private State stateId;
+    private State state;
 }

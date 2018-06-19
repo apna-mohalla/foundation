@@ -12,7 +12,7 @@ public class Maintenance {
     private int id;
 
     @ManyToOne
-    private Apartment apartmentId;
+    private Apartment apartment;
 
     @NotBlank
     private String roomNo;

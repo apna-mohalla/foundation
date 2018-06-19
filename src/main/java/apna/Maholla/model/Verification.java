@@ -17,14 +17,13 @@ public class Verification implements Serializable {
 
     @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")
-    private boolean Appartment;           //UNIQUE
+    private boolean Apartment;
 
     @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")
-    private boolean EmailID;          // string UNIQUE
+    private boolean EmailID;
 
     @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")
-    private boolean PhoneNumber;        //UNIQUE
-
+    private boolean PhoneNumber;
 }
