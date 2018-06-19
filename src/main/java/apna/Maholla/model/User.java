@@ -43,7 +43,7 @@ public class User implements Serializable {
     private Roles RoleId;               //int FK >- Roles.RoleId
 
     @ManyToOne
-    private Apartment ApartmentId;         //int FK >- Apartment.AppartmentId
+    private Apartment Apartment;         //int FK >- Apartment.AppartmentId
 
 
     @Column(nullable = false, updatable = false)

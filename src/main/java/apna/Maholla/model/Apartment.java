@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ApartmentId;          //PK int
+    private int Id;          //PK int
 
     @NotBlank
     private String ApartmentName;           //UNIQUE
