@@ -2,10 +2,11 @@ package apna.Maholla.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @Entity
-@Table(name = "ApartmentMaintenance")
-public class ApartmentMaintenance {
+@Table(name = "Notice")
+public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
@@ -13,18 +14,19 @@ public class ApartmentMaintenance {
     @ManyToOne
     private Apartment Apartment;
 
-    @ManyToOne
-    private Month monthId;
+    @NotBlank
+    private String Subject;
 
     @NotBlank
-    private int Amount;
+    private String Description;
 
     @NotBlank
-    private int FinePerMonth;
+    private Date Date;
 
     @NotBlank
-    private int LastDayToPay;
+    private String Name;
 
     @NotBlank
-    private String FineAfter;
+    private String Designation;
+
 }

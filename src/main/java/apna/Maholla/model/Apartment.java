@@ -23,13 +23,13 @@ public class Apartment {
     private String Address2;             // string
 
     @ManyToOne
-    private State stateId;
+    private State state;
 
     @ManyToOne
-    private City cityId;
+    private City city;
 
     @ManyToOne
-    private Country countryId;
+    private Country country;
 
     @NotBlank
     private long pinCode;

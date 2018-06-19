@@ -31,6 +31,9 @@ public class User implements Serializable {
     private long PhoneNumber;        //UNIQUE
 
     @NotBlank
+    private String image;
+
+    @NotBlank
     private String Password;         // string
 
     @NotBlank
