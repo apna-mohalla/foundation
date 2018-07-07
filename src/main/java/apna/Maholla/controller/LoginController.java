@@ -4,10 +4,7 @@ import apna.Maholla.exception.ResourceNotFoundException;
 import apna.Maholla.model.User;
 import apna.Maholla.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -16,8 +13,13 @@ public class LoginController {
     LoginRepository loginRepository;
 
     @GetMapping("/login/{id}")
-    public User getAllNotes(@PathVariable(value = "id") Long userId) {
-        return loginRepository.findById(userId)
+    public User getAllNotes(@PathVariable(value = "id") String userId) {
+        return loginRepository.findById(Integer.parseInt(userId))
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+    }
+
+    @PostMapping("/login")
+    public  User postLoginUser(){
+        return new User();
     }
 }
