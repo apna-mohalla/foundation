@@ -40,7 +40,6 @@ public class User implements Serializable {
     private String Name;             // string
 
     @NotBlank
-    @org.hibernate.annotations.ColumnDefault("Not Applicable")
     private String Block;
 
     @NotBlank
