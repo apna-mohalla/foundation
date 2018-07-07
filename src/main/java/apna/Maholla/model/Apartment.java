@@ -22,6 +22,10 @@ public class Apartment {
     @NotBlank
     private String Address2;             // string
 
+    @NotBlank
+    @org.hibernate.annotations.ColumnDefault("false")
+    private Boolean HasBlocks;
+
     @ManyToOne
     private State state;
 

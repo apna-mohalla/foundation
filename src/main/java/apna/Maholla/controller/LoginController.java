@@ -1,6 +1,5 @@
 package apna.Maholla.controller;
 
-import apna.Maholla.exception.ResourceNotFoundException;
 import apna.Maholla.model.User;
 import apna.Maholla.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,8 @@ public class LoginController {
     LoginRepository loginRepository;
 
     @GetMapping("/login/{id}")
-    public User getAllNotes(@PathVariable(value = "id") String userId) {
-        return loginRepository.findById(Integer.parseInt(userId))
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+    public String getAllNotes(@PathVariable(value = "id") String userId) {
+        return userId;
     }
 
     @PostMapping("/login")
