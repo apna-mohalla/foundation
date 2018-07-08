@@ -1,5 +1,6 @@
 package apna.Maholla.model;
 
+import apna.Maholla.Miscellaneous.EncryptAndDecrypt;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,33 +23,33 @@ public class User implements Serializable {
     private int ID;          //PK int
 
     @NotBlank
-    private String UserID;           //UNIQUE
+    @Column(nullable = false, unique = true)
+    public String UserID;           //UNIQUE
 
     @NotBlank
-    private String EmailID;          // string UNIQUE
+    @Column(nullable = false, unique = true)
+    public String EmailID;          // string UNIQUE
+
+    @Column(unique = true)
+    public long PhoneNumber;        //UNIQUE
+
+    public String image;
 
     @NotBlank
-    private long PhoneNumber;        //UNIQUE
-
-    private String image;
+    public String Password;         // string
 
     @NotBlank
-    private String Password;         // string
+    public String Name;             // string
+
+    public String Block;
 
     @NotBlank
-    private String Name;             // string
+    public String FlatNumber;       //string
 
-    @NotBlank
-    private String Block;
+    public int Role;               //int FK >- Roles.RoleId
 
-    @NotBlank
-    private String FlatNumber;       //string
-
-    @ManyToOne
-    private Roles Role;               //int FK >- Roles.RoleId
-
-    @ManyToOne
-    private Apartment Apartment;         //int FK >- Apartment.AppartmentId
+    @Column(nullable = false)
+    public String Apartment;         //int FK >- Apartment.AppartmentId
 
 
     @Column(nullable = false, updatable = false)
@@ -61,5 +62,8 @@ public class User implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
+    public void setPassword() throws Exception {
+        Password = EncryptAndDecrypt.encrypt(this.Password);
+    }
 }
 
