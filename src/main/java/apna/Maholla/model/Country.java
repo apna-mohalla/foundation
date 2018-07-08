@@ -1,7 +1,7 @@
 package apna.Maholla.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Country")
@@ -11,6 +11,7 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
-    private String countryName;
+    @NotNull
+    @Column(nullable = false, unique = true)
+    public String countryName;
 }

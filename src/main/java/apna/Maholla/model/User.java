@@ -30,7 +30,6 @@ public class User implements Serializable {
     @NotBlank
     private long PhoneNumber;        //UNIQUE
 
-    @NotBlank
     private String image;
 
     @NotBlank

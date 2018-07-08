@@ -19,7 +19,7 @@ public class ElectricBill {
     @Id
     private int Id;
 
-    @UniqueElements
+    @Column(nullable = false, unique = true)
     private int CustomerNumber;
 
     @ManyToOne

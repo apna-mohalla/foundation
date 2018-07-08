@@ -11,8 +11,8 @@ public class State {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
-    private String stateName;
+    @Column(nullable = false, unique = true)
+    public String stateName;
 
     @ManyToOne
     private Country country;
