@@ -20,50 +20,50 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;          //PK int
+    private int id;          //PK int
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    public String UserID;           //UNIQUE
+    public String userid;           //UNIQUE
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    public String EmailID;          // string UNIQUE
+    public String emailid;          // string UNIQUE
 
     @Column(unique = true)
-    public long PhoneNumber;        //UNIQUE
+    public long phonenumber;        //UNIQUE
 
     public String image;
 
     @NotBlank
-    public String Password;         // string
+    private String password;         // string
 
     @NotBlank
-    public String Name;             // string
+    public String name;             // string
 
-    public String Block;
+    public String block;
 
     @NotBlank
-    public String FlatNumber;       //string
+    public String flatnumber;       //string
 
-    public int Role;               //int FK >- Roles.RoleId
+    public int role;               //int FK >- Roles.RoleId
 
     @Column(nullable = false)
-    public String Apartment;         //int FK >- Apartment.AppartmentId
+    public String apartmentkey;         //int FK >- Apartment.AppartmentId
 
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    private Date createdAt;
+    private Date createdat;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
-    private Date updatedAt;
+    private Date updatedat;
 
     public void setPassword() throws Exception {
-        Password = EncryptAndDecrypt.encrypt(this.Password);
+        password = EncryptAndDecrypt.encrypt(this.password);
     }
 }
 
