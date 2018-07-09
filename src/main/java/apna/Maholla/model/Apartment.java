@@ -2,6 +2,7 @@ package apna.Maholla.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Random;
 
 @Entity
 @Table(name = "Apartment")
@@ -11,31 +12,36 @@ public class Apartment {
     private int Id;          //PK int
 
     @NotBlank
-    private String ApartmentName;           //UNIQUE
+    @Column(nullable = false, unique = true)
+    public String ApartmentName;           //UNIQUE
+
+    @Column(nullable = false, unique = true)
+    public String ApartmentUniqueId;          // string UNIQUE
 
     @NotBlank
-    private String ApartmentUniqueId;          // string UNIQUE
+    public String Address1;         // string
 
     @NotBlank
-    private String Address1;         // string
+    public String Address2;             // string
 
-    @NotBlank
-    private String Address2;             // string
-
-    @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")
-    private Boolean HasBlocks;
+    public Boolean HasBlocks;
 
-    @ManyToOne
-    private State state;
+    public int state;
 
-    @ManyToOne
-    private City city;
+    public int city;
 
-    @ManyToOne
-    private Country country;
+    public int country;
 
-    @NotBlank
-    private long pinCode;
+    @Column(nullable = false)
+    public int pincode;
 
+    public void setApartmentUniqueId(){
+        String removeSpaceFromApartmentName = ApartmentName.replaceAll(" ", "");
+        String apartmentSubName = removeSpaceFromApartmentName.length() > 3 ? removeSpaceFromApartmentName.substring(0, 3) : removeSpaceFromApartmentName;
+        String changePinCodeToString = "" + pincode;
+        String apartmentSubPin = changePinCodeToString.length() > 4 ? changePinCodeToString.substring(0, 2) + changePinCodeToString.substring(changePinCodeToString.length() - 2) : changePinCodeToString;
+        Random rand = new Random();
+        ApartmentUniqueId = apartmentSubName + apartmentSubPin + (rand.nextInt(8990) + 1000);
+    }
 }
