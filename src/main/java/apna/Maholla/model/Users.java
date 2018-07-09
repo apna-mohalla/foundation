@@ -36,7 +36,7 @@ public class Users implements Serializable {
     public String image;
 
     @NotBlank
-    private String password;         // string
+    public String password;         // string
 
     @NotBlank
     public String name;             // string

@@ -35,6 +35,10 @@ public class LoginController {
 
     @PostMapping(path = "/login", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public Users postLoginUser(@RequestBody Login login) throws Exception {
-        return loginRepository.findByUseridAndPassword(login.getUserID(), login.getPassword());
+        Users user = loginRepository.findByUseridAndPassword(login.userid, login.getPassword());
+        if(user == null){
+            user = loginRepository.findByEmailidAndPassword(login.userid, login.getPassword());
+        }
+        return user;
     }
 }
