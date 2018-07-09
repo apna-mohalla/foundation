@@ -3,11 +3,11 @@ package apna.Maholla.RequestModels;
 import apna.Maholla.Miscellaneous.EncryptAndDecrypt;
 
 public class Login {
-    private String UserID;
+    private String userid;
     private String password;
 
     public String getUserID() {
-        return this.UserID;
+        return this.userid;
     }
 
     public String getPassword() throws Exception {

@@ -11,7 +11,7 @@ public class IndividualVotes {
     private int id;
 
     @ManyToOne
-    private User user;
+    private Users users;
 
     @ManyToOne
     private Polling polling;

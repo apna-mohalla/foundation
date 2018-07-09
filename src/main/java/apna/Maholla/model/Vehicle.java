@@ -12,7 +12,7 @@ public class Vehicle {
     private int Id;
 
     @ManyToOne
-    private User User;
+    private Users Users;
 
     @ManyToOne
     private VehicleName Vehicle;

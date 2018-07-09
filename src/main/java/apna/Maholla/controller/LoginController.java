@@ -2,7 +2,7 @@ package apna.Maholla.controller;
 
 import apna.Maholla.RequestModels.Login;
 import apna.Maholla.exception.ResourceNotFoundException;
-import apna.Maholla.model.User;
+import apna.Maholla.model.Users;
 import apna.Maholla.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,20 +21,20 @@ public class LoginController {
     }
 
     @GetMapping("/login/{id}")
-    public User getAllNotes(@PathVariable(value = "id") String UserID) {
+    public Users getAllNotes(@PathVariable(value = "id") String UserID) {
         return loginRepository.findById(Integer.parseInt(UserID))
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", UserID));
+                .orElseThrow(() -> new ResourceNotFoundException("Users", "id", UserID));
     }
 
     @PostMapping(path = "/signUp", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Object> signUp(@RequestBody User user) throws Exception {
+    public ResponseEntity<Object> signUp(@RequestBody Users user) throws Exception {
         user.setPassword();
         loginRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping(path = "/login", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public  User postLoginUser(@RequestBody Login login) throws Exception {
-        return loginRepository.findByUserID(login.getUserID()).get(1);
+    public Users postLoginUser(@RequestBody Login login) throws Exception {
+        return loginRepository.findByUseridAndPassword(login.getUserID(), login.getPassword());
     }
 }

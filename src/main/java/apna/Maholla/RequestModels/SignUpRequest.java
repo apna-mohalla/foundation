@@ -1,7 +1,5 @@
 package apna.Maholla.RequestModels;
 
-import apna.Maholla.model.User;
-
 public class SignUpRequest {
 
     private String emailId;

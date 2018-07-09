@@ -13,7 +13,7 @@ public class Verification implements Serializable {
     private int id;
 
     @ManyToOne
-    private User User;
+    private Users Users;
 
     @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")

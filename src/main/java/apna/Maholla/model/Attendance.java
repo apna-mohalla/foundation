@@ -12,7 +12,7 @@ public class Attendance {
     private int Id;
 
     @ManyToOne
-    private User user;
+    private Users users;
 
     @NotBlank
     private Date enterTime;
