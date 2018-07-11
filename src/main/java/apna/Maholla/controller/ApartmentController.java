@@ -2,6 +2,9 @@ package apna.Maholla.controller;
 
 import apna.Maholla.RequestModels.UpdateApartmentRequest;
 import apna.Maholla.ResponceModel.UpdateApartment;
+import apna.Maholla.exception.ResourceFoundNotFound;
+import apna.Maholla.exception.ResourceNotFoundException;
+import apna.Maholla.exception.ResourceSavesSuccess;
 import apna.Maholla.model.Apartment;
 import apna.Maholla.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +35,15 @@ public class ApartmentController {
     }
 
     @PostMapping(path = "/updateApartmentKey", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public UpdateApartment updateApartmentKey(@RequestBody UpdateApartmentRequest updateApartmentRequest) throws Exception {
+    public ResourceFoundNotFound updateApartmentKey(@RequestBody UpdateApartmentRequest updateApartmentRequest) throws Exception {
         Apartment apartment = apartmentRepository.findByApartmentuniqueid(updateApartmentRequest.apartmentuniqueid);
         if(apartment == null){
-            return new UpdateApartment(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
+            return new ResourceNotFoundException("Apartmnet", "Apartmnet key", updateApartmentRequest.apartmentuniqueid, "Not Found", "Apartment With given key not found");
         }
         apartment.setApartmentUniqueId();
         String apartmentId = apartment.apartmentuniqueid;
         apartmentRepository.save(apartment);
-        UpdateApartment updateApartment = new UpdateApartment(ResponseEntity.status(HttpStatus.CREATED).build());
-        updateApartment.setApartmentId(apartmentId);
-        return updateApartment;
+        return new ResourceSavesSuccess("Apartmnet", "Apartmnet key", apartmentId, "Sucess", "Apartmnet key changed successfully");
 
     }
 
