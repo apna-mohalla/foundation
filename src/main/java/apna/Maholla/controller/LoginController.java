@@ -1,5 +1,6 @@
 package apna.Maholla.controller;
 
+import apna.Maholla.RequestModels.ChangeRoleRequest;
 import apna.Maholla.RequestModels.Login;
 import apna.Maholla.RequestModels.SignIn;
 import apna.Maholla.ResponceModel.User;
@@ -55,8 +56,7 @@ public class LoginController {
     @PostMapping("/getAllUsers")
     public List<Users> getAllUsers(@RequestBody Apartment apartment){
         Apartment apartment1 = apartmentRepository.findByApartmentuniqueid(apartment.apartmentuniqueid);
-        List<Users> users = loginRepository.findAllByApartmentkey(apartment1.getId());
-        return users;
+        return loginRepository.findAllByApartmentkey(apartment1.getId());
     }
 
     @PostMapping(path = "/signUp", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -84,5 +84,18 @@ public class LoginController {
     @PostMapping(path = "/verifications", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public Verification getAllVerifications(@RequestBody Verification verification) throws Exception {
         return verificationRepository.findFirstByUserid(verification.userid);
+    }
+
+    @PostMapping(path = "/setRoles", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public ResourceFoundNotFound setRolesToUser(@RequestBody ChangeRoleRequest changeRoleRequest) throws Exception {
+        Users user = loginRepository.findByUserid(changeRoleRequest.userid);
+        if(user == null)
+            return new ResourceNotFoundException("User", "UserId", changeRoleRequest.userid, "Not Found", "Userid not found");
+        Roles role = roleRepository.findFirstByRoleName(changeRoleRequest.role);
+        if(role == null)
+            return new ResourceNotFoundException("Roles", "Role", changeRoleRequest.role, "Not Found", "Role not found");
+        user.role = role.getId();
+        loginRepository.save(user);
+        return new ResourceSavesSuccess("User", "UserId", changeRoleRequest.userid, "Sucess", "Userid not found in data base");
     }
 }
