@@ -12,11 +12,11 @@ public class Apartment {
     private int Id;          //PK int
 
     @NotBlank
-    @Column(nullable = false, unique = true)
-    public String ApartmentName;           //UNIQUE
+    @Column(nullable = false)
+    public String apartmentname;           //UNIQUE
 
     @Column(nullable = false, unique = true)
-    public String ApartmentUniqueId;          // string UNIQUE
+    public String apartmentuniqueid;          // string UNIQUE
 
     @NotBlank
     public String Address1;         // string
@@ -37,11 +37,13 @@ public class Apartment {
     public int pincode;
 
     public void setApartmentUniqueId(){
-        String removeSpaceFromApartmentName = ApartmentName.replaceAll(" ", "");
+        String removeSpaceFromApartmentName = apartmentname.replaceAll(" ", "");
         String apartmentSubName = removeSpaceFromApartmentName.length() > 3 ? removeSpaceFromApartmentName.substring(0, 3) : removeSpaceFromApartmentName;
         String changePinCodeToString = "" + pincode;
         String apartmentSubPin = changePinCodeToString.length() > 4 ? changePinCodeToString.substring(0, 2) + changePinCodeToString.substring(changePinCodeToString.length() - 2) : changePinCodeToString;
         Random rand = new Random();
-        ApartmentUniqueId = apartmentSubName + apartmentSubPin + (rand.nextInt(8990) + 1000);
+        apartmentuniqueid = apartmentSubName + apartmentSubPin + (rand.nextInt(8990) + 1000);
     }
+
+
 }

@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ApartmentRepository extends JpaRepository<Apartment, Integer> {
+
+    Apartment findByApartmentuniqueid(String apartmentuniqueid);
+
 }

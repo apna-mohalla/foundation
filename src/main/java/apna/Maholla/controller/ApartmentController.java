@@ -1,5 +1,7 @@
 package apna.Maholla.controller;
 
+import apna.Maholla.RequestModels.UpdateApartmentRequest;
+import apna.Maholla.ResponceModel.UpdateApartment;
 import apna.Maholla.model.Apartment;
 import apna.Maholla.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,25 @@ public class ApartmentController {
     }
 
     @PostMapping(path = "/addApartment", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Object> postLoginUser(@RequestBody Apartment apartment) throws Exception {
+    public ResponseEntity<Object> addApartment(@RequestBody Apartment apartment) throws Exception {
         apartment.setApartmentUniqueId();
         apartmentRepository.save(apartment);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @PostMapping(path = "/updateApartmentKey", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public UpdateApartment updateApartmentKey(@RequestBody UpdateApartmentRequest updateApartmentRequest) throws Exception {
+        Apartment apartment = apartmentRepository.findByApartmentuniqueid(updateApartmentRequest.apartmentuniqueid);
+        if(apartment == null){
+            return new UpdateApartment(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
+        }
+        apartment.setApartmentUniqueId();
+        String apartmentId = apartment.apartmentuniqueid;
+        apartmentRepository.save(apartment);
+        UpdateApartment updateApartment = new UpdateApartment(ResponseEntity.status(HttpStatus.CREATED).build());
+        updateApartment.setApartmentId(apartmentId);
+        return updateApartment;
+
+    }
+
 }
