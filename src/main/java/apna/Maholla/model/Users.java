@@ -20,36 +20,36 @@ public class Users implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;          //PK int
+    private int id;
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    public String userid;           //UNIQUE
+    public String userid;
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    public String emailid;          // string UNIQUE
+    public String emailid;
 
     @Column(unique = true)
-    public long phonenumber;        //UNIQUE
+    public long phonenumber;
 
     public String image;
 
     @NotBlank
-    public String password;         // string
+    public String password;
 
     @NotBlank
-    public String name;             // string
+    public String name;
 
     public String block;
 
     @NotBlank
-    public String flatnumber;       //string
+    public String flatnumber;
 
-    public int role;               //int FK >- Roles.RoleId
+    public int role;
 
     @Column(nullable = false)
-    public String apartmentkey;         //int FK >- Apartment.AppartmentId
+    public int apartmentkey;
 
 
     @Column(nullable = false, updatable = false)

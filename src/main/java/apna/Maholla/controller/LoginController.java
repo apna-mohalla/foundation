@@ -1,8 +1,9 @@
 package apna.Maholla.controller;
 
 import apna.Maholla.RequestModels.Login;
-import apna.Maholla.exception.ResourceNotFoundException;
+import apna.Maholla.model.Apartment;
 import apna.Maholla.model.Users;
+import apna.Maholla.repository.ApartmentRepository;
 import apna.Maholla.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,20 +11,29 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api")
 public class LoginController {
     private final LoginRepository loginRepository;
+    private ApartmentRepository apartmentRepository;
 
     @Autowired
-    public LoginController(LoginRepository loginRepository) {
+    public LoginController(LoginRepository loginRepository, ApartmentRepository apartmentRepository) {
         this.loginRepository = loginRepository;
+        this.apartmentRepository = apartmentRepository;
     }
 
-    @GetMapping("/login/{id}")
-    public Users getAllNotes(@PathVariable(value = "id") String UserID) {
-        return loginRepository.findById(Integer.parseInt(UserID))
-                .orElseThrow(() -> new ResourceNotFoundException("Users", "id", UserID));
+    @PostMapping("/getUser")
+    public Users getAllNotes(@RequestBody Login login) {
+        Users user =  loginRepository.findByUserid(login.userid);
+        if(user == null)
+            user = loginRepository.findByEmailid(login.userid);
+        if(user != null){
+            Optional<Apartment> apartment = apartmentRepository.findById(user.apartmentkey);
+        }
+        return user;
     }
 
     @PostMapping(path = "/signUp", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
