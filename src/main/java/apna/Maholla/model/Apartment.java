@@ -46,4 +46,7 @@ public class Apartment {
     }
 
 
+    public int getId() {
+        return id;
+    }
 }

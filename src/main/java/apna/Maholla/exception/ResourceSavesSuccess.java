@@ -1,17 +1,13 @@
 package apna.Maholla.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException implements ResourceFoundNotFound {
+public class ResourceSavesSuccess implements ResourceFoundNotFound {
     private String resourceName;
     private String fieldName;
     private String fieldValue;
     private String status;
     private String message;
 
-    public ResourceNotFoundException(String resourceName, String fieldName, String fieldValue, String status, String message) {
+    public ResourceSavesSuccess(String resourceName, String fieldName, String fieldValue, String status, String message) {
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
@@ -27,7 +23,7 @@ public class ResourceNotFoundException implements ResourceFoundNotFound {
         return fieldName;
     }
 
-    public Object getFieldValue() {
+    public String getFieldValue() {
         return fieldValue;
     }
 

@@ -1,8 +1,13 @@
 package apna.Maholla.controller;
 
 import apna.Maholla.RequestModels.Login;
+import apna.Maholla.RequestModels.SignIn;
 import apna.Maholla.ResponceModel.User;
-import apna.Maholla.mappers.GetUserApiMapper;
+import apna.Maholla.exception.ResourceFoundNotFound;
+import apna.Maholla.exception.ResourceNotFoundException;
+import apna.Maholla.exception.ResourceSavesSuccess;
+import apna.Maholla.mappers.GetUserRequestMapper;
+import apna.Maholla.mappers.GetUserResponceMapper;
 import apna.Maholla.model.Apartment;
 import apna.Maholla.model.Roles;
 import apna.Maholla.model.Users;
@@ -10,9 +15,7 @@ import apna.Maholla.repository.ApartmentRepository;
 import apna.Maholla.repository.LoginRepository;
 import apna.Maholla.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,7 +35,7 @@ public class LoginController {
     @PostMapping("/getUser")
     public User getAllUsers(@RequestBody Login login) {
         Users user =  loginRepository.findByUserid(login.userid);
-        GetUserApiMapper getUser = new GetUserApiMapper();
+        GetUserResponceMapper getUser = new GetUserResponceMapper();
         if(user == null)
             user = loginRepository.findByEmailid(login.userid);
         if(user != null){
@@ -44,10 +47,15 @@ public class LoginController {
     }
 
     @PostMapping(path = "/signUp", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Object> signUp(@RequestBody Users user) throws Exception {
-        user.setPassword();
-        loginRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResourceFoundNotFound signUp(@RequestBody SignIn userRequest) throws Exception {
+        GetUserRequestMapper getUserRequestMapper = new GetUserRequestMapper();
+        Apartment apartment = apartmentRepository.findByApartmentuniqueid(userRequest.apartmentkey);
+        if(apartment == null){
+            return new ResourceNotFoundException("Apartmnet", "Apartmnet key", userRequest.apartmentkey, "Not Found", "Apartment With given key not found");
+        }
+        getUserRequestMapper.setUser(userRequest, apartment);
+        loginRepository.save(getUserRequestMapper.user);
+        return new ResourceSavesSuccess("User", "UserId", userRequest.userid, "Sucess", "User signed in successfully");
     }
 
     @PostMapping(path = "/login", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })

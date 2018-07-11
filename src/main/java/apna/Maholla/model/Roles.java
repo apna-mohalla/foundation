@@ -13,4 +13,8 @@ public class Roles {
 
     @NotBlank
     public String roleName;
+
+    public int getId() {
+        return id;
+    }
 }
