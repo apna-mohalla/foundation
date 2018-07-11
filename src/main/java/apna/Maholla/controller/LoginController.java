@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -37,7 +39,7 @@ public class LoginController {
     }
 
     @PostMapping("/getUser")
-    public User getAllUsers(@RequestBody Login login) {
+    public User getUser(@RequestBody Login login) {
         Users user =  loginRepository.findByUserid(login.userid);
         GetUserResponceMapper getUser = new GetUserResponceMapper();
         if(user == null)
@@ -48,6 +50,13 @@ public class LoginController {
             getUser.setUserDetails(user, apartment, role);
         }
         return getUser.userDetails;
+    }
+
+    @PostMapping("/getAllUsers")
+    public List<Users> getAllUsers(@RequestBody Apartment apartment){
+        Apartment apartment1 = apartmentRepository.findByApartmentuniqueid(apartment.apartmentuniqueid);
+        List<Users> users = loginRepository.findAllByApartmentkey(apartment1.getId());
+        return users;
     }
 
     @PostMapping(path = "/signUp", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
