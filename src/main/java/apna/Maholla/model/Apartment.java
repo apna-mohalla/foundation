@@ -9,7 +9,7 @@ import java.util.Random;
 public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;          //PK int
+    private int id;          //PK int
 
     @NotBlank
     @Column(nullable = false)

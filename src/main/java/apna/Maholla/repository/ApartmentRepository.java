@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ApartmentRepository extends JpaRepository<Apartment, Integer> {
 
     Apartment findByApartmentuniqueid(String apartmentuniqueid);
+    Apartment findFirstById(Integer id);
 
 }
