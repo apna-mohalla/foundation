@@ -4,6 +4,7 @@ import apna.Maholla.ResponceModel.User;
 import apna.Maholla.model.Apartment;
 import apna.Maholla.model.Roles;
 import apna.Maholla.model.Users;
+import apna.Maholla.model.Verification;
 
 public class GetUserResponceMapper {
     public User userDetails;
@@ -12,7 +13,7 @@ public class GetUserResponceMapper {
         userDetails = new User();
     }
 
-    public void setUserDetails(Users user, Apartment apartment, Roles role){
+    public void setUserDetails(Users user, Apartment apartment, Roles role, Verification verification){
         userDetails.setName(user.name);
         userDetails.setEmailid(user.emailid);
         mapApartment(apartment);
@@ -21,7 +22,14 @@ public class GetUserResponceMapper {
         userDetails.setImage(user.image);
         userDetails.setPhonenumber(user.phonenumber);
         userDetails.setUserid(user.userid);
+        mapVerifications(verification);
         mapRoles(role);
+    }
+
+    private void mapVerifications(Verification verification) {
+        userDetails.setEmailVerified(verification.emailid);
+        userDetails.setPhoneNumberVerified(verification.phonenumber);
+        userDetails.setApartmentVerified(verification.apartment);
     }
 
     private void mapRoles(Roles role) {

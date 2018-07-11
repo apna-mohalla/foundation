@@ -10,6 +10,9 @@ public class User {
     public String flatnumber;
     public String role;
     public String apartmentName;
+    public Boolean emailVerified;
+    public Boolean phoneNumberVerified;
+    public Boolean apartmentVerified;
 
     public void setUserid(String userid) {
         this.userid = userid;
@@ -45,5 +48,17 @@ public class User {
 
     public void setApartmentName(String apartmentName) {
         this.apartmentName = apartmentName;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public void setPhoneNumberVerified(Boolean phoneNumberVerified) {
+        this.phoneNumberVerified = phoneNumberVerified;
+    }
+
+    public void setApartmentVerified(Boolean apartmentVerified) {
+        this.apartmentVerified = apartmentVerified;
     }
 }

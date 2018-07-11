@@ -48,7 +48,8 @@ public class LoginController {
         if(user != null){
             Apartment apartment = apartmentRepository.findFirstById(user.apartmentkey);
             Roles role = roleRepository.findFirstById(user.role);
-            getUser.setUserDetails(user, apartment, role);
+            Verification verification = verificationRepository.findFirstByUserid(user.emailid);
+            getUser.setUserDetails(user, apartment, role, verification);
         }
         return getUser.userDetails;
     }
