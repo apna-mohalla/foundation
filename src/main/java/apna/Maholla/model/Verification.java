@@ -1,7 +1,6 @@
 package apna.Maholla.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity

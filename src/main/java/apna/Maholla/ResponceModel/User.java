@@ -1,12 +1,5 @@
 package apna.Maholla.ResponceModel;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
-
 public class User {
     public String userid;
     public String emailid;

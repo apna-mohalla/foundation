@@ -1,7 +1,6 @@
 package apna.Maholla.controller;
 
 import apna.Maholla.RequestModels.UpdateApartmentRequest;
-import apna.Maholla.ResponceModel.UpdateApartment;
 import apna.Maholla.exception.ResourceFoundNotFound;
 import apna.Maholla.exception.ResourceNotFoundException;
 import apna.Maholla.exception.ResourceSavesSuccess;
@@ -38,12 +37,12 @@ public class ApartmentController {
     public ResourceFoundNotFound updateApartmentKey(@RequestBody UpdateApartmentRequest updateApartmentRequest) throws Exception {
         Apartment apartment = apartmentRepository.findByApartmentuniqueid(updateApartmentRequest.apartmentuniqueid);
         if(apartment == null){
-            return new ResourceNotFoundException("Apartmnet", "Apartmnet key", updateApartmentRequest.apartmentuniqueid, "Not Found", "Apartment With given key not found");
+            return new ResourceNotFoundException("Apartment", "Apartment key", updateApartmentRequest.apartmentuniqueid, "Not Found", "Apartment With given key not found");
         }
         apartment.setApartmentUniqueId();
         String apartmentId = apartment.apartmentuniqueid;
         apartmentRepository.save(apartment);
-        return new ResourceSavesSuccess("Apartmnet", "Apartmnet key", apartmentId, "Sucess", "Apartmnet key changed successfully");
+        return new ResourceSavesSuccess("Apartment", "Apartment key", apartmentId, "Sucess", "Apartment key changed successfully");
 
     }
 
