@@ -11,6 +11,7 @@ import apna.Maholla.mappers.GetUserResponceMapper;
 import apna.Maholla.model.Apartment;
 import apna.Maholla.model.Roles;
 import apna.Maholla.model.Users;
+import apna.Maholla.model.Verification;
 import apna.Maholla.repository.ApartmentRepository;
 import apna.Maholla.repository.LoginRepository;
 import apna.Maholla.repository.RoleRepository;
@@ -69,5 +70,10 @@ public class LoginController {
             user = loginRepository.findByEmailidAndPassword(login.userid, login.getPassword());
         }
         return user;
+    }
+
+    @PostMapping(path = "/verifications", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public Verification getAllVerifications(@RequestBody Verification verification) throws Exception {
+        return verificationRepository.findFirstByUserid(verification.userid);
     }
 }
