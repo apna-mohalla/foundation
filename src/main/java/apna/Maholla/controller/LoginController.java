@@ -14,6 +14,7 @@ import apna.Maholla.model.Users;
 import apna.Maholla.repository.ApartmentRepository;
 import apna.Maholla.repository.LoginRepository;
 import apna.Maholla.repository.RoleRepository;
+import apna.Maholla.repository.VerificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,14 @@ public class LoginController {
     private final LoginRepository loginRepository;
     private ApartmentRepository apartmentRepository;
     private RoleRepository roleRepository;
+    private VerificationRepository verificationRepository;
 
     @Autowired
-    public LoginController(LoginRepository loginRepository, ApartmentRepository apartmentRepository, RoleRepository roleRepository) {
+    public LoginController(LoginRepository loginRepository, ApartmentRepository apartmentRepository, RoleRepository roleRepository, VerificationRepository verificationRepository) {
         this.loginRepository = loginRepository;
         this.apartmentRepository = apartmentRepository;
         this.roleRepository = roleRepository;
+        this.verificationRepository = verificationRepository;
     }
 
     @PostMapping("/getUser")
@@ -51,10 +54,11 @@ public class LoginController {
         GetUserRequestMapper getUserRequestMapper = new GetUserRequestMapper();
         Apartment apartment = apartmentRepository.findByApartmentuniqueid(userRequest.apartmentkey);
         if(apartment == null){
-            return new ResourceNotFoundException("Apartmnet", "Apartmnet key", userRequest.apartmentkey, "Not Found", "Apartment With given key not found");
+            return new ResourceNotFoundException("Apartment", "Apartment key", userRequest.apartmentkey, "Not Found", "Apartment With given key not found");
         }
         getUserRequestMapper.setUser(userRequest, apartment);
         loginRepository.save(getUserRequestMapper.user);
+        verificationRepository.save(getUserRequestMapper.verification);
         return new ResourceSavesSuccess("User", "UserId", userRequest.userid, "Sucess", "User signed in successfully");
     }
 

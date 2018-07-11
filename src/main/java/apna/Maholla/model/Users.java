@@ -65,5 +65,9 @@ public class Users implements Serializable {
     public void setPassword() throws Exception {
         password = EncryptAndDecrypt.encrypt(this.password);
     }
+
+    public int getId() {
+        return id;
+    }
 }
 

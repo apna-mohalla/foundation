@@ -12,18 +12,14 @@ public class Verification implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    private Users Users;
+    public String userid;
 
-    @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")
-    private boolean Apartment;
+    public boolean apartment;
 
-    @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")
-    private boolean EmailID;
+    public boolean emailid;
 
-    @NotBlank
     @org.hibernate.annotations.ColumnDefault("false")
-    private boolean PhoneNumber;
+    public boolean phonenumber;
 }
