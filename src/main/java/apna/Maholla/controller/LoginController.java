@@ -76,7 +76,7 @@ public class LoginController {
         FlatMapper flatMapper = new FlatMapper();
         flatMapper.setFlat(userRequest, apartment);
         flatRepository.save(flatMapper.flat);
-        return new ResourceSavesSuccess("User", "UserId", userRequest.userid, "Sucess", "User signed up successfully");
+        return new ResourceSavesSuccess("User", "UserId", userRequest.userid, "sucess", "User signed up successfully");
     }
 
     @PostMapping(path = "/login", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -103,6 +103,6 @@ public class LoginController {
         updatedUserMapper.setUpdatedUser();
         loginRepository.delete(oldUserDetails);
         loginRepository.save(updatedUserMapper.updatedUser);
-        return new ResourceSavesSuccess("User", "UserId", newUserDetails.userid, "Sucess", "Userid Updated");
+        return new ResourceSavesSuccess("User", "UserId", newUserDetails.userid, "sucess", "Userid Updated");
     }
 }

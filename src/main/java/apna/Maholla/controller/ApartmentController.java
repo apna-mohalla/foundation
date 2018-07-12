@@ -41,7 +41,7 @@ public class ApartmentController {
         apartment.setApartmentUniqueId();
         String apartmentId = apartment.apartmentuniqueid;
         apartmentRepository.save(apartment);
-        return new ResourceSavesSuccess("Apartment", "Apartment key", apartmentId, "Sucess", "Apartment key changed successfully");
+        return new ResourceSavesSuccess("Apartment", "Apartment key", apartmentId, "sucess", "Apartment key changed successfully");
 
     }
 }

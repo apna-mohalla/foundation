@@ -43,7 +43,7 @@ public class NoticeController {
         }
         notice.setApartmentkey(user.apartmentkey);
         noticeRepository.save(notice);
-        return new ResourceSavesSuccess("Notice", "Notice", notice.subject, "Sucess", "Notice added");
+        return new ResourceSavesSuccess("Notice", "Notice", notice.subject, "sucess", "Notice added");
     }
 
     @PostMapping(path = "/getAllNotice", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})

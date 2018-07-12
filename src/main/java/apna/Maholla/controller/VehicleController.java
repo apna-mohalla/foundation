@@ -50,7 +50,7 @@ public class VehicleController {
         }
         vehicle.setApartmentkey(user.apartmentkey);
         vehicleRepository.save(vehicle);
-        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "Sucess", "Vehicle added");
+        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "sucess", "Vehicle added");
     }
 
     @PostMapping(path = "/getVehicle", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -82,7 +82,7 @@ public class VehicleController {
         }
         vehicleRepository.delete(vehicle);
         vehicleRepository.save(vehicleRequest);
-        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "Sucess", "Vehicle Updated");
+        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "sucess", "Vehicle Updated");
     }
 
     @PostMapping(path = "/deleteVehicle", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -100,7 +100,7 @@ public class VehicleController {
             return new ResourceNotFoundException("User", "Vehicle Number", vehicleRequest.userid, "Forbidden", "You are not autorised to update");
         }
         vehicleRepository.delete(vehicle);
-        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "Sucess", "Vehicle Updated");
+        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "sucess", "Vehicle Updated");
     }
 
     @PostMapping(path = "/getAllUserVehicle", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})

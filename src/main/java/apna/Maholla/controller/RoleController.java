@@ -50,7 +50,7 @@ public class RoleController {
         user.role = role.getId();
         flatRepository.save(flat);
         loginRepository.save(user);
-        return new ResourceSavesSuccess("User", "UserId", changeRoleRequest.userid, "Sucess", "Roles Updated Successfully");
+        return new ResourceSavesSuccess("User", "UserId", changeRoleRequest.userid, "sucess", "Roles Updated Successfully");
     }
 
     @GetMapping(path = "/getRoles", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
