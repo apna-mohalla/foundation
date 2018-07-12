@@ -18,4 +18,6 @@ public class VehicleResponceModel {
     public String block;
 
     public long phonenumber;
+
+    public boolean shouldContactOwner;
 }

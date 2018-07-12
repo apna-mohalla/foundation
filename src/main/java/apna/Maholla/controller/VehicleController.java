@@ -69,14 +69,13 @@ public class VehicleController {
     @PostMapping(path = "/getAllUserVehicle", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public List<VehicleResponceModel> getAllUserVehicle(@RequestBody VehicleRequestMapper vehicleRequestMapper) {
         VehicleResponceMapper vehicleResponceMapper = new VehicleResponceMapper();
-            List<Vehicle> vehicles = vehicleRepository.findByUserid(vehicleRequestMapper.userid);
             Users user = loginRepository.findByEmailid(vehicleRequestMapper.userid);
-            for (Vehicle vehicle : vehicles) {
-                if (vehicle.shouldcontactowner) {
-                    Flat flat = flatRepository.findByApartmentidAndAndFlatnumberAndAndBlock(user.apartmentkey, user.flatnumber, user.block);
-                    user = loginRepository.findById(flat.ownerid);
+            List<Users> users = loginRepository.findAllByApartmentkeyAndBlockAndFlatnumber(user.apartmentkey, user.block, user.flatnumber);
+            for(Users usr: users) {
+                List<Vehicle> vehicles = vehicleRepository.findByUserid(usr.emailid);
+                for (Vehicle vehicle : vehicles) {
+                    vehicleResponceMapper.mapAllVehicleResponceModels(vehicle, usr);
                 }
-                vehicleResponceMapper.setVehicleResponceModels(vehicle, user);
             }
         return vehicleResponceMapper.vehicleResponceModels;
     }

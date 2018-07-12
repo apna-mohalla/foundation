@@ -17,6 +17,10 @@ public interface LoginRepository extends JpaRepository<Users, Integer> {
 
     Users findByUserid(String UserId);
 
+    Users findById(int id);
+
     List<Users> findAllByApartmentkey(int apartmentkey);
+
+    List<Users> findAllByApartmentkeyAndBlockAndFlatnumber(int apartmentkey, String flatnumber, String block);
 }
 
