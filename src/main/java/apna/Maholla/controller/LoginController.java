@@ -7,17 +7,12 @@ import apna.Maholla.ResponceModel.User;
 import apna.Maholla.exception.ResourceFoundNotFound;
 import apna.Maholla.exception.ResourceNotFoundException;
 import apna.Maholla.exception.ResourceSavesSuccess;
+import apna.Maholla.mappers.FlatMapper;
 import apna.Maholla.mappers.GetUserRequestMapper;
 import apna.Maholla.mappers.GetUserResponceMapper;
 import apna.Maholla.mappers.UpdatedUserMapper;
-import apna.Maholla.model.Apartment;
-import apna.Maholla.model.Roles;
-import apna.Maholla.model.Users;
-import apna.Maholla.model.Verification;
-import apna.Maholla.repository.ApartmentRepository;
-import apna.Maholla.repository.LoginRepository;
-import apna.Maholla.repository.RoleRepository;
-import apna.Maholla.repository.VerificationRepository;
+import apna.Maholla.model.*;
+import apna.Maholla.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +26,15 @@ public class LoginController {
     private ApartmentRepository apartmentRepository;
     private RoleRepository roleRepository;
     private VerificationRepository verificationRepository;
+    private FlatRepository flatRepository;
 
     @Autowired
-    public LoginController(LoginRepository loginRepository, ApartmentRepository apartmentRepository, RoleRepository roleRepository, VerificationRepository verificationRepository) {
+    public LoginController(LoginRepository loginRepository, ApartmentRepository apartmentRepository, RoleRepository roleRepository, VerificationRepository verificationRepository, FlatRepository flatRepository) {
         this.loginRepository = loginRepository;
         this.apartmentRepository = apartmentRepository;
         this.roleRepository = roleRepository;
         this.verificationRepository = verificationRepository;
+        this.flatRepository = flatRepository;
     }
 
     @PostMapping("/getUser")
@@ -71,6 +68,9 @@ public class LoginController {
         getUserRequestMapper.setUser(userRequest, apartment);
         loginRepository.save(getUserRequestMapper.user);
         verificationRepository.save(getUserRequestMapper.verification);
+        FlatMapper flatMapper = new FlatMapper();
+        flatMapper.setFlat(userRequest, apartment);
+        flatRepository.save(flatMapper.flat);
         return new ResourceSavesSuccess("User", "UserId", userRequest.userid, "Sucess", "User signed in successfully");
     }
 
@@ -86,24 +86,6 @@ public class LoginController {
     @PostMapping(path = "/verifications", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public Verification getAllVerifications(@RequestBody Verification verification) throws Exception {
         return verificationRepository.findFirstByUserid(verification.userid);
-    }
-
-    @PostMapping(path = "/setRoles", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public ResourceFoundNotFound setRolesToUser(@RequestBody ChangeRoleRequest changeRoleRequest) throws Exception {
-        Users user = loginRepository.findByUserid(changeRoleRequest.userid);
-        if(user == null)
-            return new ResourceNotFoundException("User", "UserId", changeRoleRequest.userid, "Not Found", "Userid not found");
-        Roles role = roleRepository.findFirstByRoleName(changeRoleRequest.role);
-        if(role == null)
-            return new ResourceNotFoundException("Roles", "Role", changeRoleRequest.role, "Not Found", "Role not found");
-        user.role = role.getId();
-        loginRepository.save(user);
-        return new ResourceSavesSuccess("User", "UserId", changeRoleRequest.userid, "Sucess", "Userid not found in data base");
-    }
-
-    @GetMapping(path = "/getRoles", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public List<Roles> getAllAvailableRoles() throws Exception {
-        return roleRepository.findAll();
     }
 
     @PostMapping(path = "/updateUserDetails", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })

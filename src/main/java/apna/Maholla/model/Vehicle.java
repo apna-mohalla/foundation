@@ -20,6 +20,9 @@ public class Vehicle {
 
     public String image;
 
+    @org.hibernate.annotations.ColumnDefault("false")
+    public boolean shouldcontactowner;
+
     @Column(nullable = false, unique = true)
     public String vehiclenumber;
 

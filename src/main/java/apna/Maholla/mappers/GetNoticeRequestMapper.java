@@ -9,12 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class GetNoticeRequestMapper {
-    public List<NoticeResponceModel> noticeResponceModels = new ArrayList<>();
+    public List<NoticeResponceModel> noticeResponceModels;
 
-    @Autowired
     public GetNoticeRequestMapper() {
+        noticeResponceModels = new ArrayList<>();
     }
 
     public void setNoticeResponceModels(Notice notice, Users user) {
