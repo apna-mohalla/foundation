@@ -3,8 +3,6 @@ package apna.Maholla.mappers;
 import apna.Maholla.ResponceModel.NoticeResponceModel;
 import apna.Maholla.model.Notice;
 import apna.Maholla.model.Users;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

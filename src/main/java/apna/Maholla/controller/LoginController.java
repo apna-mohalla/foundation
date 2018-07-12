@@ -1,6 +1,5 @@
 package apna.Maholla.controller;
 
-import apna.Maholla.RequestModels.ChangeRoleRequest;
 import apna.Maholla.RequestModels.Login;
 import apna.Maholla.RequestModels.SignIn;
 import apna.Maholla.ResponceModel.User;
@@ -11,11 +10,17 @@ import apna.Maholla.mappers.FlatMapper;
 import apna.Maholla.mappers.GetUserRequestMapper;
 import apna.Maholla.mappers.GetUserResponceMapper;
 import apna.Maholla.mappers.UpdatedUserMapper;
-import apna.Maholla.model.*;
+import apna.Maholla.model.Apartment;
+import apna.Maholla.model.Roles;
+import apna.Maholla.model.Users;
+import apna.Maholla.model.Verification;
 import apna.Maholla.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -71,7 +76,7 @@ public class LoginController {
         FlatMapper flatMapper = new FlatMapper();
         flatMapper.setFlat(userRequest, apartment);
         flatRepository.save(flatMapper.flat);
-        return new ResourceSavesSuccess("User", "UserId", userRequest.userid, "Sucess", "User signed in successfully");
+        return new ResourceSavesSuccess("User", "UserId", userRequest.userid, "Sucess", "User signed up successfully");
     }
 
     @PostMapping(path = "/login", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -96,6 +101,7 @@ public class LoginController {
             return new ResourceNotFoundException("User", "UserId", newUserDetails.userid, "All ready exit", "User with this userid all ready exist");
         UpdatedUserMapper updatedUserMapper = new UpdatedUserMapper(newUserDetails, oldUserDetails);
         updatedUserMapper.setUpdatedUser();
+        loginRepository.delete(oldUserDetails);
         loginRepository.save(updatedUserMapper.updatedUser);
         return new ResourceSavesSuccess("User", "UserId", newUserDetails.userid, "Sucess", "Userid Updated");
     }
