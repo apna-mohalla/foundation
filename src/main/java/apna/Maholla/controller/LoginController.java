@@ -115,6 +115,6 @@ public class LoginController {
         UpdatedUserMapper updatedUserMapper = new UpdatedUserMapper(newUserDetails, oldUserDetails);
         updatedUserMapper.setUpdatedUser();
         loginRepository.save(updatedUserMapper.updatedUser);
-        return new ResourceSavesSuccess("User", "UserId", newUserDetails.userid, "Sucess", "Userid not found in data base");
+        return new ResourceSavesSuccess("User", "UserId", newUserDetails.userid, "Sucess", "Userid Updated");
     }
 }

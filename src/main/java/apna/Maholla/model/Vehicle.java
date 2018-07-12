@@ -11,13 +11,22 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    @ManyToOne
-    private Users Users;
+    @Column(nullable = false)
+    public String userid;
 
-    @ManyToOne
-    private VehicleName Vehicle;
+    public String vehiclename;
 
-    @NotBlank
-    private String VehicleNumber;
+    public String vehicletype;
 
+    public String image;
+
+    @Column(nullable = false, unique = true)
+    public String vehiclenumber;
+
+    @Column(nullable = false)
+    private int apartmentkey;
+
+    public void setApartmentkey(int apartmentkey) {
+        this.apartmentkey = apartmentkey;
+    }
 }
