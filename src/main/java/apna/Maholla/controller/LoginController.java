@@ -9,6 +9,7 @@ import apna.Maholla.exception.ResourceNotFoundException;
 import apna.Maholla.exception.ResourceSavesSuccess;
 import apna.Maholla.mappers.GetUserRequestMapper;
 import apna.Maholla.mappers.GetUserResponceMapper;
+import apna.Maholla.mappers.UpdatedUserMapper;
 import apna.Maholla.model.Apartment;
 import apna.Maholla.model.Roles;
 import apna.Maholla.model.Users;
@@ -98,5 +99,22 @@ public class LoginController {
         user.role = role.getId();
         loginRepository.save(user);
         return new ResourceSavesSuccess("User", "UserId", changeRoleRequest.userid, "Sucess", "Userid not found in data base");
+    }
+
+    @GetMapping(path = "/getRoles", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public List<Roles> getAllAvailableRoles() throws Exception {
+        return roleRepository.findAll();
+    }
+
+    @PostMapping(path = "/updateUserDetails", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public ResourceFoundNotFound updateUserDetails(@RequestBody Users newUserDetails) throws Exception {
+        Users oldUserDetails = loginRepository.findByEmailid(newUserDetails.emailid);
+        Users userWithSameUserId = loginRepository.findByUserid(newUserDetails.userid);
+        if(userWithSameUserId == null)
+            return new ResourceNotFoundException("User", "UserId", newUserDetails.userid, "All ready exit", "User with this userid all ready exist");
+        UpdatedUserMapper updatedUserMapper = new UpdatedUserMapper(newUserDetails, oldUserDetails);
+        updatedUserMapper.setUpdatedUser();
+        loginRepository.save(updatedUserMapper.updatedUser);
+        return new ResourceSavesSuccess("User", "UserId", newUserDetails.userid, "Sucess", "Userid not found in data base");
     }
 }

@@ -36,14 +36,12 @@ public class ApartmentController {
     @PostMapping(path = "/updateApartmentKey", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public ResourceFoundNotFound updateApartmentKey(@RequestBody UpdateApartmentRequest updateApartmentRequest) throws Exception {
         Apartment apartment = apartmentRepository.findByApartmentuniqueid(updateApartmentRequest.apartmentuniqueid);
-        if(apartment == null){
+        if(apartment == null)
             return new ResourceNotFoundException("Apartment", "Apartment key", updateApartmentRequest.apartmentuniqueid, "Not Found", "Apartment With given key not found");
-        }
         apartment.setApartmentUniqueId();
         String apartmentId = apartment.apartmentuniqueid;
         apartmentRepository.save(apartment);
         return new ResourceSavesSuccess("Apartment", "Apartment key", apartmentId, "Sucess", "Apartment key changed successfully");
 
     }
-
 }
