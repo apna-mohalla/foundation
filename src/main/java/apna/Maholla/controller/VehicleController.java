@@ -66,6 +66,43 @@ public class VehicleController {
         return vehicleResponceMapper.vehicleResponceModel;
     }
 
+    @PostMapping(path = "/updateVehicle", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public ResourceFoundNotFound updateVehicle(@RequestBody Vehicle vehicleRequest) {
+        Vehicle vehicle = vehicleRepository.findByVehiclenumber(vehicleRequest.vehiclenumber);
+        Users user = loginRepository.findByEmailid(vehicle.userid);
+        List<Users> users = loginRepository.findAllByApartmentkeyAndBlockAndFlatnumber(user.apartmentkey, user.block, user.flatnumber);
+        boolean authoried = false;
+        for(Users usr: users) {
+            if(usr.emailid.equalsIgnoreCase(vehicleRequest.userid)){
+                authoried = true;
+            }
+        }
+        if(!authoried){
+            return new ResourceNotFoundException("User", "Vehicle Number", vehicleRequest.userid, "Forbidden", "You are not autorised to update");
+        }
+        vehicleRepository.delete(vehicle);
+        vehicleRepository.save(vehicleRequest);
+        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "Sucess", "Vehicle Updated");
+    }
+
+    @PostMapping(path = "/deleteVehicle", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public ResourceFoundNotFound deleteVehicle(@RequestBody Vehicle vehicleRequest) {
+        Vehicle vehicle = vehicleRepository.findByVehiclenumber(vehicleRequest.vehiclenumber);
+        Users user = loginRepository.findByEmailid(vehicle.userid);
+        List<Users> users = loginRepository.findAllByApartmentkeyAndBlockAndFlatnumber(user.apartmentkey, user.block, user.flatnumber);
+        boolean authoried = false;
+        for(Users usr: users) {
+            if(usr.emailid.equalsIgnoreCase(vehicleRequest.userid)){
+                authoried = true;
+            }
+        }
+        if(!authoried){
+            return new ResourceNotFoundException("User", "Vehicle Number", vehicleRequest.userid, "Forbidden", "You are not autorised to update");
+        }
+        vehicleRepository.delete(vehicle);
+        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "Sucess", "Vehicle Updated");
+    }
+
     @PostMapping(path = "/getAllUserVehicle", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public List<VehicleResponceModel> getAllUserVehicle(@RequestBody VehicleRequestMapper vehicleRequestMapper) {
         VehicleResponceMapper vehicleResponceMapper = new VehicleResponceMapper();
