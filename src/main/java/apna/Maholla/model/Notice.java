@@ -1,32 +1,46 @@
 package apna.Maholla.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
 @Table(name = "Notice")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
+        allowGetters = true)
 public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    @ManyToOne
-    private Apartment Apartment;
+
+    private int apartmentkey;
 
     @NotBlank
-    private String Subject;
+    public String subject;
 
     @NotBlank
-    private String Description;
+    @Length(max = 1000)
+    public String description;
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    public Date date;
 
     @NotBlank
-    private Date Date;
+    public String userid;
 
     @NotBlank
-    private String Name;
+    public String designation;
 
-    @NotBlank
-    private String Designation;
-
+    public void setApartmentkey(int apartmentkey) {
+        this.apartmentkey = apartmentkey;
+    }
 }
