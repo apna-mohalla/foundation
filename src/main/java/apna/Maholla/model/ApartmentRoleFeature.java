@@ -9,9 +9,9 @@ public class ApartmentRoleFeature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    private int apartment;
+    public int apartment;
 
-    private int role;
+    public int role;
 
-    private int feature;
+    public int feature;
 }

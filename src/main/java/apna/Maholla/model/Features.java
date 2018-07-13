@@ -17,4 +17,7 @@ public class Features {
     @NotBlank
     public String description;
 
+    public int getId() {
+        return Id;
+    }
 }
