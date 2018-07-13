@@ -9,12 +9,9 @@ public class ApartmentRoleFeature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    @ManyToOne
-    private Apartment Apartment;
+    private int apartment;
 
-    @ManyToOne
-    private Roles Role;
+    private int role;
 
-    @ManyToOne
-    private Feature Feature;
+    private int feature;
 }

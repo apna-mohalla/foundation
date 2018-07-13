@@ -1,6 +1,6 @@
 package apna.Maholla.controller;
 
-import apna.Maholla.RequestModels.NoticeRequestMapper;
+import apna.Maholla.RequestModels.UserApartmentRequestMapper;
 import apna.Maholla.ResponceModel.NoticeResponceModel;
 import apna.Maholla.exception.ResourceFoundNotFound;
 import apna.Maholla.exception.ResourceNotFoundException;
@@ -47,7 +47,7 @@ public class NoticeController {
     }
 
     @PostMapping(path = "/getAllNotice", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public List<NoticeResponceModel> getAllNotice(@RequestBody NoticeRequestMapper noticeRequestMapper) throws Exception {
+    public List<NoticeResponceModel> getAllNotice(@RequestBody UserApartmentRequestMapper noticeRequestMapper) throws Exception {
         List<Notice> notices;
         if (noticeRequestMapper.userid != null) {
             Users user = loginRepository.findByEmailid(noticeRequestMapper.userid);

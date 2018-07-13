@@ -13,6 +13,6 @@ public class ApartmentFeature {
     private Apartment Apartment;
 
     @ManyToOne
-    private Feature Feature;
+    private Features Feature;
 
 }

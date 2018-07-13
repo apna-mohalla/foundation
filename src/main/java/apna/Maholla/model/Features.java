@@ -4,17 +4,17 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "Feature")
-public class Feature {
+@Table(name = "features")
+public class Features {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    @NotBlank
-    private String FeatureName;
+    @Column(nullable = false, unique = true)
+    public String featurename;
 
     @NotBlank
-    private String Description;
+    public String description;
 
 }
