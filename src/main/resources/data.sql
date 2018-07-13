@@ -40,6 +40,9 @@ VALUES ('View Vehicle', 'Can search vehicle');
 INSERT INTO features (featurename, description)
 VALUES ('Assign role', 'Can assign roles');
 
+INSERT INTO features (featurename, description)
+VALUES ('Update Apartment Key', 'Can change apartment unique key');
+
 
 
 

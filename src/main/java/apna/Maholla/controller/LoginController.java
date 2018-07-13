@@ -97,7 +97,7 @@ public class LoginController {
     public ResourceFoundNotFound updateUserDetails(@RequestBody Users newUserDetails) throws Exception {
         Users oldUserDetails = loginRepository.findByEmailid(newUserDetails.emailid);
         Users userWithSameUserId = loginRepository.findByUserid(newUserDetails.userid);
-        if(userWithSameUserId == null)
+        if(userWithSameUserId != null)
             return new ResourceNotFoundException("User", "UserId", newUserDetails.userid, "All ready exit", "User with this userid all ready exist");
         UpdatedUserMapper updatedUserMapper = new UpdatedUserMapper(newUserDetails, oldUserDetails);
         updatedUserMapper.setUpdatedUser();
