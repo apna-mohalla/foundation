@@ -12,11 +12,18 @@ public class MeetingSchedule {
     private int Id;
 
     public int creater;
-    public String agenda;
-    public String venue;
-    public String discription;
-    public Date timeofthemeeting;
-    public int durationinminutes;
-    public String minutesofmeeting;
 
+    public int apartmentid;
+
+    public String agenda;
+
+    public String venue;
+
+    public String discription;
+
+    public Date timeofthemeeting;
+
+    public int durationinminutes;
+
+    public String minutesofmeeting;
 }

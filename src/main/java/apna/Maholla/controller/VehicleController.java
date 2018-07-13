@@ -88,6 +88,9 @@ public class VehicleController {
     @PostMapping(path = "/deleteVehicle", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public ResourceFoundNotFound deleteVehicle(@RequestBody Vehicle vehicleRequest) {
         Vehicle vehicle = vehicleRepository.findByVehiclenumber(vehicleRequest.vehiclenumber);
+        if(vehicle == null){
+            return new ResourceNotFoundException("User", "Vehicle Number", vehicleRequest.vehiclenumber, "Not Found", "This Vehice do not exist");
+        }
         Users user = loginRepository.findByEmailid(vehicle.userid);
         List<Users> users = loginRepository.findAllByApartmentkeyAndBlockAndFlatnumber(user.apartmentkey, user.block, user.flatnumber);
         boolean authoried = false;
@@ -100,7 +103,7 @@ public class VehicleController {
             return new ResourceNotFoundException("User", "Vehicle Number", vehicleRequest.userid, "Forbidden", "You are not autorised to update");
         }
         vehicleRepository.delete(vehicle);
-        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "sucess", "Vehicle Updated");
+        return new ResourceSavesSuccess("Vehicle", "Vehicle Number", vehicle.vehiclename, "sucess", "Vehicle deleted");
     }
 
     @PostMapping(path = "/getAllUserVehicle", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})

@@ -1,10 +1,8 @@
 package apna.Maholla.repository;
 
-import apna.Maholla.model.MeetingSchedule;
+import apna.Maholla.model.MeetingActionItems;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MeetingRepository extends JpaRepository<MeetingSchedule, Integer> {
-
-}
+public interface MeetingActionItemsRepository extends JpaRepository<MeetingActionItems, Integer> { }
