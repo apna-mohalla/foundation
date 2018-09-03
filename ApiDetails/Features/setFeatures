@@ -1,0 +1,58 @@
+# Post ->  "/setFeatures"
+
+#### Request Sample:-
+
+{
+	"userid" : "a@gmail.com",
+	"role" : "Owner",
+	"features" : [
+		"Add Notice",
+		"Update Apartment Key"
+		]
+}
+
+#### Responce Sample:-  
+1. UserIsNotCorrect
+{
+    "resourceName": "User",
+    "fieldName": "UserId",
+    "fieldValue": "k@gmail.com",
+    "status": "Not Found",
+    "message": "User with this userid does not exist"
+}
+2. Unauthorized
+{
+    "resourceName": "User",
+    "fieldName": "Role",
+    "fieldValue": "v@gmail.com",
+    "status": "Forbidden",
+    "message": "You are not authorized to align roles"
+}
+3. RoleNotCorrect
+{
+    "resourceName": "Role",
+    "fieldName": "Role name",
+    "fieldValue": "Owne",
+    "status": "Not Found",
+    "message": "Role not supported"
+}
+4. IfFeatureProvidedIsWrong
+{
+    "resourceName": "Features",
+    "fieldName": "Name",
+    "fieldValue": "",
+    "status": "Not Found",
+    "message": "Some of the features not supported"
+}
+5. Success
+{
+    "resourceName": "Features",
+    "fieldName": "",
+    "fieldValue": "a@gmail.com",
+    "status": "success",
+    "message": "Feature added to the role"
+}
+
+
+#### Description : -
+1. Sets features for the specific user.

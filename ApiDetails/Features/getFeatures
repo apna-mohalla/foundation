@@ -1,0 +1,29 @@
+# GET ->  "/getFeatures"
+
+#### Responce Sample:-  
+[
+    {
+        "featurename": "Add Notice",
+        "description": "Can add notice"
+    },
+    {
+        "featurename": "Add Vehicle",
+        "description": "Can add Vehicle"
+    },
+    {
+        "featurename": "View Vehicle",
+        "description": "Can search vehicle"
+    },
+    {
+        "featurename": "Assign role",
+        "description": "Can assign roles"
+    },
+    {
+        "featurename": "Update Apartment Key",
+        "description": "Can change apartment unique key"
+    }
+]
+
+
+#### Description : -
+1. Gives all the features supported by our app.

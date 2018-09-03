@@ -1,6 +1,8 @@
 package apna.Maholla.controller;
 
 import apna.Maholla.RequestModels.CommonRequestMapper;
+import apna.Maholla.RequestModels.Login;
+import apna.Maholla.ResponceModel.ResponceFeatureMapper;
 import apna.Maholla.exception.ResourceFoundNotFound;
 import apna.Maholla.exception.ResourceNotFoundException;
 import apna.Maholla.exception.ResourceSavesSuccess;
@@ -37,9 +39,29 @@ public class FeatureController {
         this.roleRepository = roleRepository;
     }
 
-    @GetMapping(path = "/getFeatures", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public List<Features> getAllAvailableFeature() {
-        return featuresRepository.findAll();
+    @GetMapping(path = "/getAllFeatures", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public List<ResponceFeatureMapper> getAllAvailableFeature() {
+        List<ResponceFeatureMapper> responceFeatureMappers = new ArrayList<>();
+        for (Features feature: featuresRepository.findAll()) {
+            responceFeatureMappers.add(new ResponceFeatureMapper(feature.featurename, feature.description));
+        };
+        return responceFeatureMappers;
+    }
+
+    @PostMapping(path = "/getFeatures", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public List<ResponceFeatureMapper> getUsersFeature(@RequestBody Login login) {
+        if(login.userid != null) {
+            Users user = loginRepository.findByEmailid(login.userid);
+            if (user != null) {
+                Roles role = roleRepository.findFirstById(user.role);
+                List<ResponceFeatureMapper> responceFeatureMappers = new ArrayList<>();
+                for (Features feature : featuresRepository.findAll()) {
+                    responceFeatureMappers.add(new ResponceFeatureMapper(feature.featurename, feature.description));
+                }
+                return responceFeatureMappers;
+            }
+        }
+        return null;
     }
 
     @PostMapping(path = "/setFeatures", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -62,28 +84,6 @@ public class FeatureController {
             return new ResourceNotFoundException("Features", "Name", "", "Not Found", "Some of the features not supported");
         addFeatureRoleMap(user, featureDis, role.getId());
         return new ResourceSavesSuccess("Features", "", userApartmentRequestMapper.userid, "sucess", "Feature added to the role");
-    }
-
-    @PostMapping(path = "/removeFeatures", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResourceFoundNotFound removeFeaturesToRoles(@RequestBody CommonRequestMapper userApartmentRequestMapper) {
-        Users user = loginRepository.findByEmailid(userApartmentRequestMapper.userid);
-        ResourceNotFoundException resourceNotFoundException = checkForAuthentication(userApartmentRequestMapper, user);
-        if (resourceNotFoundException != null)
-            return resourceNotFoundException;
-        Roles role = roleRepository.findFirstByRoleName(userApartmentRequestMapper.role);
-        if (role == null)
-            return new ResourceNotFoundException("Role", "Role name", userApartmentRequestMapper.role, "Not Found", "Role not supported");
-        List<Features> featureDis = new ArrayList<>();
-        for (String feature : userApartmentRequestMapper.features) {
-            Features feature1 = featuresRepository.findByFeaturename(feature);
-            if (feature1 == null)
-                break;
-            featureDis.add(feature1);
-        }
-        if (featureDis.size() != userApartmentRequestMapper.features.size())
-            return new ResourceNotFoundException("Features", "Name", "", "Not Found", "Some of the features not supported");
-        removeFeatureRoleMap(user, featureDis, role.getId());
-        return new ResourceSavesSuccess("Features", "", userApartmentRequestMapper.userid, "sucess", "Feature deleted form role");
     }
 
     private ResourceNotFoundException checkForAuthentication(CommonRequestMapper userApartmentRequestMapper, Users user) {
@@ -111,13 +111,4 @@ public class FeatureController {
         }
     }
 
-    private void removeFeatureRoleMap(Users user, List<Features> featureDis, int roleId) {
-        for (Features features : featureDis) {
-            RoleFeatureMapper roleFeatureMapper = new RoleFeatureMapper(user.apartmentkey, features.getId(), roleId);
-            ApartmentRoleFeature apartmentRoleFeature = apartmentRoleFeatureRepository.findFirstByApartmentAndFeatureAndRole(roleFeatureMapper.apartment, roleFeatureMapper.feature, roleFeatureMapper.role);
-            if (apartmentRoleFeature != null) {
-                apartmentRoleFeatureRepository.delete(apartmentRoleFeature);
-            }
-        }
-    }
 }

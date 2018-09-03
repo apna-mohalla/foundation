@@ -65,7 +65,6 @@ public class ApartmentController {
         if (user == null)
             return "UnAuthorized";
         Features feature = featuresRepository.findByFeaturename("Update Apartment Key");
-        System.out.println(feature);
         if (feature == null)
             return "UnAuthorized";
         ApartmentRoleFeature apartmentRoleFeature = apartmentRoleFeatureRepository.findFirstByApartmentAndFeatureAndRole(user.apartmentkey, feature.getId(), user.role);
