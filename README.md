@@ -5,3 +5,8 @@
 
 ## To setup
 1. mvn spring-boot:run
+
+
+## Swagger
+http://localhost:5000/swagger-ui.html#/
+http://localhost:5000/v2/api-docs
